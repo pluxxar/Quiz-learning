@@ -4,7 +4,7 @@ public class quiz {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-        int score = 0;
+        char retry;
 
         String[] questions = {
             "Java is a ?",
@@ -18,32 +18,51 @@ public class quiz {
 
         char[] answers = {'b', 'b'};
 
-        System.out.println("WELCOME TO THE QUIZ!");
+        do {
+            int score = 0;
 
-        for (int i = 0; i < questions.length; i++) {
+            System.out.println("\nWELCOME TO THE QUIZ!");
 
-            System.out.println("\nQ" + (i + 1) + ": " + questions[i]);
+            for (int i = 0; i < questions.length; i++) {
 
-            for (int j = 0; j < options[i].length; j++) {
-                System.out.println(options[i][j]);
+                System.out.println("\nQ" + (i + 1) + ": " + questions[i]);
+
+                for (int j = 0; j < options[i].length; j++) {
+                    System.out.println(options[i][j]);
+                }
+
+                System.out.print("Your Answer (a/b/c): ");
+                char userAns = Character.toLowerCase(sc.next().charAt(0));
+
+                if (userAns != 'a' && userAns != 'b' && userAns != 'c') {
+                    System.out.println("Invalid choice. Skipping question.");
+                    continue;
+                }
+
+                if (userAns == answers[i]) {
+                    score++;
+                }
             }
 
-            System.out.print("Your Answer (a/b/c): ");
-            char userAns = Character.toLowerCase(sc.next().charAt(0));
+            int total = questions.length;
+            int percentage = (score * 100) / total;
 
-            if (userAns != 'a' && userAns != 'b' && userAns != 'c') {
-                System.out.println("Invalid choice. Skipping question.");
-                continue;
+            System.out.println("\n===== RESULT =====");
+            System.out.println("Score: " + score + "/" + total);
+            System.out.println("Percentage: " + percentage + "%");
+
+            if (percentage >= 40) {
+                System.out.println("Status: PASS ✅");
+            } else {
+                System.out.println("Status: FAIL ❌");
             }
 
-            if (userAns == answers[i]) {
-                score++;
-            }
-        }
+            System.out.print("\nDo you want to retry the quiz? (y/n): ");
+            retry = Character.toLowerCase(sc.next().charAt(0));
 
-        System.out.println("\nQuiz Finished!");
-        System.out.println("Your Score: " + score + "/" + questions.length);
+        } while (retry == 'y');
 
+        System.out.println("\nThank you for playing!");
         sc.close();
     }
 }
