@@ -1,18 +1,15 @@
 import java.util.Scanner;
+import java.io.File;
+import java.util.ArrayList;
 
 public class quiz {
 
-    // Method to ask a single question
-    static int askQuestion(
-            Scanner sc,
-            String question,
-            String[] options,
-            char correctAnswer
-    ) {
+    static int askQuestion(Scanner sc, String question, String[] options, char correct) {
+
         System.out.println("\n" + question);
 
-        for (int i = 0; i < options.length; i++) {
-            System.out.println(options[i]);
+        for (String opt : options) {
+            System.out.println(opt);
         }
 
         System.out.print("Your Answer (a/b/c): ");
@@ -23,67 +20,47 @@ public class quiz {
             return 0;
         }
 
-        if (userAns == correctAnswer) {
-            return 1; // correct
-        }
-
-        return 0; // wrong
-    }
-
-    // Method to show result
-    static void showResult(int score, int total) {
-        int percentage = (score * 100) / total;
-
-        System.out.println("\n===== RESULT =====");
-        System.out.println("Score: " + score + "/" + total);
-        System.out.println("Percentage: " + percentage + "%");
-
-        if (percentage >= 40) {
-            System.out.println("Status: PASS ✅");
-        } else {
-            System.out.println("Status: FAIL ❌");
-        }
+        return userAns == correct ? 1 : 0;
     }
 
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-        char retry;
+        ArrayList<String> questions = new ArrayList<>();
+        ArrayList<String[]> optionsList = new ArrayList<>();
+        ArrayList<Character> answers = new ArrayList<>();
 
-        String[] questions = {
-            "Java is a ?",
-            "Which one is a loop?"
-        };
+        try {
+            File file = new File("questions.txt");
+            Scanner fileReader = new Scanner(file);
 
-        String[][] options = {
-            {"A) OS", "B) Programming Language", "C) Browser"},
-            {"A) If", "B) For", "C) Break"}
-        };
+            while (fileReader.hasNextLine()) {
+                String line = fileReader.nextLine();
+                String[] parts = line.split("\\|");
 
-        char[] answers = {'b', 'b'};
-
-        do {
-            int score = 0;
-
-            System.out.println("\nWELCOME TO THE QUIZ!");
-
-            for (int i = 0; i < questions.length; i++) {
-                score += askQuestion(
-                        sc,
-                        "Q" + (i + 1) + ": " + questions[i],
-                        options[i],
-                        answers[i]
-                );
+                questions.add(parts[0]);
+                optionsList.add(parts[1].split(","));
+                answers.add(parts[2].charAt(0));
             }
 
-            showResult(score, questions.length);
+            fileReader.close();
+        } catch (Exception e) {
+            System.out.println("Error reading file.");
+            return;
+        }
 
-            System.out.print("\nDo you want to retry the quiz? (y/n): ");
-            retry = Character.toLowerCase(sc.next().charAt(0));
+        int score = 0;
 
-        } while (retry == 'y');
+        for (int i = 0; i < questions.size(); i++) {
+            score += askQuestion(
+                    sc,
+                    "Q" + (i + 1) + ": " + questions.get(i),
+                    optionsList.get(i),
+                    answers.get(i)
+            );
+        }
 
-        System.out.println("\nThank you for playing!");
+        System.out.println("\nFinal Score: " + score + "/" + questions.size());
         sc.close();
     }
 }

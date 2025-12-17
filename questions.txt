@@ -1,0 +1,2 @@
+Java is a ?|A) OS,B) Programming Language,C) Browser|b
+Which one is a loop?|A) If,B) For,C) Break|b
