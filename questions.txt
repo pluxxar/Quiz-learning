@@ -1,2 +1,5 @@
 Java is a ?|A) OS,B) Programming Language,C) Browser|b
 Which one is a loop?|A) If,B) For,C) Break|b
+HTML stands for?|A) Hyper Text Markup Language,B) High Tech Modern Language,C) Home Tool Markup Language|a
+CSS is used for?|A) Programming,B) Styling,C) Database|b
+Which is a JavaScript framework?|A) Python,B) React,C) MySQL|b

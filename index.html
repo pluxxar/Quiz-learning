@@ -2,22 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Quiz App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Quiz App</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="quiz-box">
-    <h2 id="question">Question will appear here</h2>
+<div class="quiz-container">
+    <div class="quiz-box">
+        <div class="quiz-header">
+            <h1>Quiz Time</h1>
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+            <p class="question-counter" id="counter">Question 1 of 5</p>
+        </div>
 
-    <div class="options">
-        <button class="option" onclick="checkAnswer('a')">A</button>
-        <button class="option" onclick="checkAnswer('b')">B</button>
-        <button class="option" onclick="checkAnswer('c')">C</button>
+        <h2 id="question">Question will appear here</h2>
+
+        <div class="options" id="options">
+            <!-- Options will be dynamically inserted here -->
+        </div>
+
+        <div class="result-container">
+            <p id="result"></p>
+        </div>
+
+        <div class="button-container">
+            <button id="nextBtn" onclick="nextQuestion()">Next Question →</button>
+        </div>
     </div>
-
-    <p id="result"></p>
-    <button id="nextBtn" onclick="nextQuestion()">Next</button>
 </div>
 
 <script src="script.js"></script>
